@@ -30,6 +30,9 @@ size and len
 #include <stdio.h>
 #include <stdlib.h>
 
+
+void swap(int*,int*);
+
 struct Array{
     int * A;
     int size;
@@ -46,6 +49,7 @@ void Display(struct Array arr)
     for (i = 0; i < arr.len ; i++){
         printf("%d", arr.A[i]);
     }
+    printf("\n");
 }
 
 //Adding data to an array ADT
@@ -59,6 +63,21 @@ void Add(struct Array *arr, int x)
 
         //update length
         arr->len++;
+    }
+}
+
+//Delete data to an array ADT
+void Delete(struct Array *arr , int pos)
+{
+    if (pos > arr->size)
+        printf("Out of range index array");
+    else
+    {
+        for (int i = pos; i <= arr->len; i++)
+        {
+            arr->A[i] = arr->A[i+1];
+        }
+        arr->len--;
     }
 }
 
@@ -84,6 +103,47 @@ void Insert(struct Array *arr, int x, int pos)
     }
 }
 
+//Search method Linear Search and Binary Search
+//Linear Search 
+int LinearSearch (struct Array arr, int key)
+{
+    /*
+    In linear search the best case : O(1) when the key to be searched is in the index 1
+    O(n) --> when the key to be searchd is in the last index
+    */
+    for (int i=0;i<arr.len;i++)
+    {
+        if (key == arr.A[i])
+            return i;
+    }
+    return -1;
+}
+
+//Linear Search Improved 
+
+int LinearSearchImproved (struct Array *arr, int key)
+{
+    for (int i=0;i<arr->len;i++)
+    {
+        if (key== arr->A[i])
+        {
+            swap(arr->A[i], arr->A[i+1]);
+            return i;
+        }
+    }
+    return -1;
+}
+
+//Linear Search Improved Move to Front
+
+void swap(int *x, int *y)
+{
+    int temp;
+    temp = *x;
+    *x = *y ;
+    *y = temp;
+}
+
 int main()
 {
     struct Array arr;
@@ -106,5 +166,8 @@ int main()
     arr.len = n ;
 
     Display(arr);
-
+    Delete(&arr, 3);
+    Display(arr);
+    printf("Searching number of %d\n", 12);
+    printf("Result search in index : %d", LinearSearch(arr, 12));
 }
