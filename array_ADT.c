@@ -51,9 +51,13 @@ void Display(struct Array arr)
 //Adding data to an array ADT
 void Add(struct Array arr, int x)
 {   
+    //Check whether length no more than size (there is still room)
     if (arr.len < arr.size)
     {
+        //add item at the end of array ADT
         arr.A[arr.len] = x;
+
+        //update length
         arr.len++;
     }
 }
@@ -61,17 +65,21 @@ void Add(struct Array arr, int x)
 //Inserting data to an array ADT
 void Insert(struct Array arr, int x, int pos)
 {
+    //check whether pos not more than size
     if (pos > arr.size)
     {
         printf("Index array more than expected");
     }
     else
     {
+        //Shift the pos to right
         for (int i = arr.len; i >= pos; i--)
         {
             arr.A[i] = arr.A[i - 1];
         }
+        //insert new item to pos
         arr.A[pos] = x;
+        //update length
         arr.len++;
     }
 }
