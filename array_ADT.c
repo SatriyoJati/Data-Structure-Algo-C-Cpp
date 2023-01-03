@@ -120,7 +120,6 @@ int LinearSearch (struct Array arr, int key)
 }
 
 //Linear Search Improved 
-
 int LinearSearchImproved (struct Array *arr, int key)
 {
     for (int i=0;i<arr->len;i++)
@@ -135,10 +134,9 @@ int LinearSearchImproved (struct Array *arr, int key)
 }
 
 //Linear Search Improved Move to Front
-
 void swap(int *x, int *y)
 {
-    int temp;
+    int temp = 0;
     temp = *x;
     *x = *y ;
     *y = temp;
@@ -265,13 +263,48 @@ int avg (struct Array arr)
     5. Right rotate
 */
 
-void Reverse(struct Array arr)
+void Reverse(struct Array *arr)
 {
-    for (int i = arr.len , int j = 0;i>=0; i--,j++)
+    int *B;
+    B = (int *) malloc(arr->len*sizeof(int));
+
+    for (int i = arr->len-1 ,j = 0; i>=0; i--, j++)
     {
-        B[j]
+        B[j] = arr->A[i];
+    }
+
+    for (int i = 0 ; i < arr->len; i++)
+    {
+        arr->A[i] = B[i];
     }
 }
+
+void ReverseV2(struct Array *arr)
+{
+    int i,j;
+    for(i=0, j=arr->len-1 ; i<j ;i++,j--)
+    {   
+        swap(&arr->A[i], &arr->A[j]);
+    }
+}
+
+void InsertSort(struct Array *arr, int x)
+{
+    int i=arr->len-1;
+    if (arr->len == arr->size)
+        return;
+    while (i>=0 && arr->A[i] > x)
+    {
+        arr->A[i+1]= arr-> A[i];
+        i--;
+    }
+
+    arr->A[i+1]=x;
+    arr->len++;
+}
+
+
+
 int main()
 {
     struct Array arr;
@@ -302,4 +335,10 @@ int main()
     printf("\nMax value of array : %d", max(arr));
     printf("\nMin value of array : %d", min(arr));
     printf("\nSum of array is : %d", sum(arr));
+    Reverse(&arr);
+    printf("\nReverse of the arry is : ");
+    Display(arr);
+    ReverseV2(&arr);
+    printf("\nReverse version 2 of the array is :");
+    Display(arr);
 }
