@@ -360,6 +360,68 @@ struct Array* MergeArray(struct Array* arr1 , struct Array * arr2)
     return arr3; //return pointer new array
 }
 
+struct Array *Union(struct Array *arr1, struct Array *arr2)
+{
+    int i, j, k;
+    i = j = k = 0;
+    struct Array *arr3 = (struct Array *)malloc(sizeof(struct Array));
+
+    // Copying array1 to array2 until one of index pointer greater than it's length
+    while (i < arr1->len && j < arr2->len)
+    {
+        // printf("%d", arr1->A[0]);
+        if (arr1->A[i] < arr2->A[j])
+            arr3->A[k++] = arr1->A[i++];
+        else if (arr1->A[i] > arr2 -> A[j])
+            arr3->A[k++] = arr2->A[j++];
+        else
+        {
+            arr3->A[k++] = arr2->A[j++];
+            i++;
+        }
+    }
+
+    // Copy remaining element of longer array from array1
+    for (; i < arr1->len; i++)
+        arr3->A[k++] = arr1->A[i++];
+
+    // Copy remaining element of longer array from array2
+    for (; j < arr2->len; j++)
+        arr3->A[k++] = arr2->A[j++];
+
+    arr3->len = k;
+    arr3->size = 10;
+
+    return arr3; // return pointer new array
+}
+
+struct Array *Intersection(struct Array  *arr1, struct Array *arr2)
+{
+    int i, j, k;
+    i = j = k = 0;
+    struct Array *arr3 = (struct Array *)malloc(sizeof(struct Array));
+
+    // Copying array1 to array2 until one of index pointer greater than it's length
+    while (i < arr1->len && j < arr2->len)
+    {
+        // printf("%d", arr1->A[0]);
+        if (arr1->A[i] < arr2->A[j])
+            i++;
+        else if (arr1->A[i] > arr2->A[j])
+            j++;
+        else
+        {
+            arr3->A[k++] = arr2->A[j++];
+            i++;
+        }
+    }
+
+    arr3->len = k;
+    arr3->size = 10;
+
+    return arr3; // return pointer new array
+}
+
 int main()
 {
     struct Array arr={{2,3,4,5,6,7,8},10,7};
@@ -391,11 +453,20 @@ int main()
     struct Array arr1 = {{1, 2, 3, 4, 5, 6}, 10, 6};
 
     Display(arr1);
-    struct Array arr2 = {{1, 8, 9, 0, 2}, 10, 5};
+    struct Array arr2 = {{1, 2, 8, 10, 12}, 10, 5};
 
     Display(arr2);
     struct Array* result;
 
+    printf("MergeArray:");
     result = MergeArray(&arr1, &arr2);
+    Display(*result);
+
+    printf("Union:");
+    result = Union(&arr1, &arr2);
+    Display(*result);
+
+    printf("Intersection");
+    result = Intersection(&arr1, &arr2);
     Display(*result);
 }
