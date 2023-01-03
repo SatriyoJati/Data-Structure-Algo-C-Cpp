@@ -303,7 +303,31 @@ void InsertSort(struct Array *arr, int x)
     arr->len++;
 }
 
+int isSorted(struct Array arr)
+{
+    int i = 0;
+    for(i=0 ;i < arr.len-1 ; i++)
+    {
+        if (arr.A[i] > arr.A[i+1])
+            return -1;
+    }
 
+    return 0;
+}
+
+void RearrangeNegElement(struct Array *arr)
+{
+    int i,j=0;
+    i=0;
+    j = arr->len - 1;
+
+    while(i<j)
+    {
+        while(arr->A[i]<0)i++;
+        while(arr->A[j]>=0)j--;
+        if(i<j) swap(&arr->A[i] , &arr->A[j]);
+    }
+}
 
 int main()
 {
@@ -340,5 +364,13 @@ int main()
     Display(arr);
     ReverseV2(&arr);
     printf("\nReverse version 2 of the array is :");
+    Display(arr);
+    printf("\n Insert the sorted array");
+    InsertSort(&arr,15);
+    Display(arr);
+    printf("\nis Array sorted? : ");
+    printf("Answer is %d" , isSorted(arr));
+    printf("\nRearrage negative element of array ");
+    RearrangeNegElement(&arr);
     Display(arr);
 }
