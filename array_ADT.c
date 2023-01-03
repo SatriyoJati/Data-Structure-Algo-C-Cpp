@@ -34,7 +34,7 @@ size and len
 void swap(int*,int*);
 
 struct Array{
-    int A[10];
+    int *A;
     int size;
     int len;
 };
@@ -127,7 +127,7 @@ int LinearSearchImproved (struct Array *arr, int key)
     {
         if (key== arr->A[i])
         {
-            swap(arr->A[i], arr->A[i+1]);
+            swap(&arr->A[i], &arr->A[i+1]);
             return i;
         }
     }
@@ -422,51 +422,90 @@ struct Array *Intersection(struct Array  *arr1, struct Array *arr2)
     return arr3; // return pointer new array
 }
 
+struct Array *Difference(struct Array *arr1, struct Array *arr2)
+{
+    int i, j, k;
+    i = j = k = 0;
+    struct Array *arr3 = (struct Array *)malloc(sizeof(struct Array));
+
+    // Copying array1 to array2 until one of index pointer greater than it's length
+    while (i < arr1->len && j < arr2->len)
+    {
+        // printf("%d", arr1->A[0]);
+        if (arr1->A[i] < arr2->A[j])
+            arr3->A[k++] = arr1->A[i++];
+        else if (arr1->A[i] > arr2->A[j])
+            arr3->A[k++] = arr2->A[j++];
+        else
+        {
+            k++;j++;
+            i++;
+        }
+    }
+
+    // Copy remaining element of longer array from array1
+    for (; i < arr1->len; i++)
+        arr3->A[k++] = arr1->A[i++];
+
+    arr3->len = k;
+    arr3->size = 10;
+
+    return arr3; // return pointer new array
+}
+
 int main()
 {
-    struct Array arr={{2,3,4,5,6,7,8},10,7};
+    int ch;
 
-    Display(arr);
-    // Delete(&arr, 3);
-    Display(arr);
-    printf("Searching number of %d\n", 15);
-    printf("\nResult search in index : %d", LinearSearch(arr, 15));
-    printf("\nResult using BinSearch in index: %d", BinSearch(arr, 15));
-    printf("\nMax value of array : %d", max(arr));
-    printf("\nMin value of array : %d", min(arr));
-    printf("\nSum of array is : %d", sum(arr));
-    Reverse(&arr);
-    printf("\nReverse of the arry is : ");
-    Display(arr);
-    ReverseV2(&arr);
-    printf("\nReverse version 2 of the array is :");
-    Display(arr);
-    printf("\n Insert the sorted array");
-    InsertSort(&arr,15);
-    Display(arr);
-    printf("\nis Array sorted? : ");
-    printf("Answer is %d" , isSorted(arr));
-    printf("\nRearrage negative element of array ");
-    RearrangeNegElement(&arr);
-    Display(arr);
+    int index, x;
+    struct Array arr;
+    scanf("%d%d" , arr.size);
+    arr.A = (int*) malloc(arr.size*sizeof(int));
 
-    struct Array arr1 = {{1, 2, 3, 4, 5, 6}, 10, 6};
+    printf("Menu\n");
+    printf("1. Insert\n");
+    printf("2. Delete\n");
+    printf("3. Search\n");
+    printf("4. Sum\n");
+    printf("5. Display\n");
+    printf("6. Exit\n");
 
-    Display(arr1);
-    struct Array arr2 = {{1, 2, 8, 10, 12}, 10, 5};
+    printf("enter your choice?");
+    scanf("%d", &ch);
 
-    Display(arr2);
-    struct Array* result;
+    do
+    {
+        switch (ch)
+        {
+        case 1:
+            printf("Enter value and index:\n");
+            scanf("%d%d", x, index);
+            Insert(&arr, &x, index);
+            break;
+        case 2:
+            printf("Delete value at index :?\n");
+            scanf("%d", &index);
+            Delete(&arr, index);
+            break;
 
-    printf("MergeArray:");
-    result = MergeArray(&arr1, &arr2);
-    Display(*result);
+        case 3:
+            int key;
+            printf("Search value in array, Enter the Key:\n");
+            scanf("%d", &key);
+            printf("Found key %d at index %d", key, BinSearch(arr, key));
+            break;
 
-    printf("Union:");
-    result = Union(&arr1, &arr2);
-    Display(*result);
+        case 4:
+            printf("Sum of array:\n");
+            printf("Sum of array : %d", sum(arr));
+            break;
 
-    printf("Intersection");
-    result = Intersection(&arr1, &arr2);
-    Display(*result);
+        case 5:
+            printf("Displaying on Array: \n");
+            Display(arr);
+            break;
+        }
+    }
+    while(ch<6);
+    return 0;
 }
