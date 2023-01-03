@@ -34,7 +34,7 @@ size and len
 void swap(int*,int*);
 
 struct Array{
-    int * A;
+    int A[10];
     int size;
     int len;
 };
@@ -46,10 +46,11 @@ void Display(struct Array arr)
     int i;
 
     printf("\nElements data:\n");
+    // printf("%d", *x);
     for (i = 0; i < arr.len ; i++){
         printf("%d ", arr.A[i]);
     }
-    printf("\n");
+     printf("\n");
 }
 
 //Adding data to an array ADT
@@ -329,26 +330,39 @@ void RearrangeNegElement(struct Array *arr)
     }
 }
 
+struct Array* MergeArray(struct Array* arr1 , struct Array * arr2)
+{
+    int i,j,k;
+    i=j=k=0;
+    struct Array *arr3 = (struct Array *) malloc(sizeof(struct Array));
+
+    //Copying array1 to array2 until one of index pointer greater than it's length
+    while (i < arr1->len && j < arr2->len )
+    {
+        //printf("%d", arr1->A[0]);
+        if (arr1->A[i] < arr2->A[j])
+            arr3->A[k++] = arr1->A[i++];
+        else 
+            arr3->A[k++] = arr2->A[j++];
+    }
+
+    //Copy remaining element of longer array from array1
+    for( ;i< arr1->len ;i++ )
+        arr3->A[k++]=arr1->A[i++];
+
+    //Copy remaining element of longer array from array2
+    for(;j < arr2->len ;j++ )
+        arr3->A[k++] = arr2->A[j++];
+
+    arr3->len = arr1->len + arr2->len;
+    arr3->size = arr1->size + arr2->size;
+
+    return arr3; //return pointer new array
+}
+
 int main()
 {
-    struct Array arr;
-    printf("Enter size of an array :");
-    scanf("%d", &arr.size);
-    int n,i;
-
-    //Dynamic Array for C lan using malloc and cast
-    arr.A = (int *)malloc(arr.size*sizeof(int));
-    arr.len =0;
-
-    printf("Enter how many numbers :\n");
-    scanf("%d", &n);
-
-    printf("Enter all element : \n");
-    for (i=0; i<n; i++)
-    {
-        scanf("%d", &arr.A[i]);
-    }
-    arr.len = n ;
+    struct Array arr={{2,3,4,5,6,7,8},10,7};
 
     Display(arr);
     // Delete(&arr, 3);
@@ -373,4 +387,15 @@ int main()
     printf("\nRearrage negative element of array ");
     RearrangeNegElement(&arr);
     Display(arr);
+
+    struct Array arr1 = {{1, 2, 3, 4, 5, 6}, 10, 6};
+
+    Display(arr1);
+    struct Array arr2 = {{1, 8, 9, 0, 2}, 10, 5};
+
+    Display(arr2);
+    struct Array* result;
+
+    result = MergeArray(&arr1, &arr2);
+    Display(*result);
 }
