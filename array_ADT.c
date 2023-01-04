@@ -26,7 +26,6 @@ Data in array :
 size and len
 */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -458,29 +457,28 @@ int main()
     int ch;
 
     int index, x;
+    int key;
     struct Array arr;
-    scanf("%d%d" , arr.size);
+    scanf("%d" , &arr.size);
     arr.A = (int*) malloc(arr.size*sizeof(int));
-
-    printf("Menu\n");
-    printf("1. Insert\n");
-    printf("2. Delete\n");
-    printf("3. Search\n");
-    printf("4. Sum\n");
-    printf("5. Display\n");
-    printf("6. Exit\n");
-
-    printf("enter your choice?");
-    scanf("%d", &ch);
-
     do
     {
+        printf("Menu\n");
+        printf("1. Insert\n");
+        printf("2. Delete\n");
+        printf("3. Search\n");
+        printf("4. Sum\n");
+        printf("5. Display\n");
+        printf("6. Exit\n");
+
+        printf("enter your choice?");
+        scanf("%d", &ch);
         switch (ch)
         {
         case 1:
             printf("Enter value and index:\n");
-            scanf("%d%d", x, index);
-            Insert(&arr, &x, index);
+            scanf("%d%d", &x, &index);
+            Insert(&arr, x, index);
             break;
         case 2:
             printf("Delete value at index :?\n");
@@ -489,7 +487,6 @@ int main()
             break;
 
         case 3:
-            int key;
             printf("Search value in array, Enter the Key:\n");
             scanf("%d", &key);
             printf("Found key %d at index %d", key, BinSearch(arr, key));
@@ -505,7 +502,6 @@ int main()
             Display(arr);
             break;
         }
-    }
-    while(ch<6);
+    } while (ch < 6);
     return 0;
 }
