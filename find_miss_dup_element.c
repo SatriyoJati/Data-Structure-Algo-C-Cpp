@@ -120,6 +120,14 @@ void FindDuplicateCount(int * A )
 
 void FindDuplicateUnsorted(int *arr)
 {
+    /*
+        Find duplicate unsorted array, the method is 
+        1. check first element.
+        2. check subsequence element if there are same element as first element, then
+        change them to -1.
+        3. next loop will check difference number, same as previous skip -1. 
+    */
+
     int i,j;
     for(i = 0; i< 10 ; i++)
     {
@@ -134,12 +142,48 @@ void FindDuplicateUnsorted(int *arr)
     }
 }
 
+void FindDupUnsortedHash(int * arr)
+{
+    int i,j, maxVal;
+    maxVal = FindMax(arr);
+    int * B = (int*) malloc(maxVal*sizeof(int));
+
+    for (j = 0 ; j < maxVal + 1 ; j++)
+    {
+        B[j] = 0;
+    }
+
+    // int D[] = {3,2,4,1,5,4,2,3,8,9,1,0,6};
+
+    for(i=0;i<10;i++)
+    {
+        (B[arr[i]])++;
+    }
+
+    for (i=0;i<maxVal;i++)
+    {
+        printf("%d", B[i]);
+    }
+
+    printf("\n");
+
+    for (i=0;i<maxVal+1;i++)
+    {
+        if (B[i] != 0 && B[i] > 1)
+        {
+            printf("Found duplicate of %d using HashMap\n", i);
+        }
+        
+    }
+
+}
+
 int main()
 {
     int A[] = {1,2,3,4,5,6,8,9,10,11,12};
     int B[] = {6,7,8,9,13,14,15,16,19,20};
     int C[] = {0,1,2,2,3,4,5,5,5,6,7,8,9};
-    int D[] = {3,2,4,1,5,4,2,3,8,9,1,0};
+    int D[] = {3,2,4,1,5,4,2,3,8,9,1,0,6};
     int sum,s = 0;
 
     for(int i = 0 ; i < 11; i++)
@@ -155,6 +199,7 @@ int main()
     FindMissHash(B);
     FindDuplicate(C);
     FindDuplicateCount(C);
-    FindDuplicateUnsorted(D);
+    // FindDuplicateUnsorted(D);
+    FindDupUnsortedHash(D);
     return 0;
 }
