@@ -118,11 +118,28 @@ void FindDuplicateCount(int * A )
     }
 }
 
+void FindDuplicateUnsorted(int *arr)
+{
+    int i,j;
+    for(i = 0; i< 10 ; i++)
+    {
+        for(j=i+1 ; j<10;j++)
+        {
+            if (arr[j] == arr[i] && arr[j] !=  -1)
+            {
+                printf("Find duplicate unsorted %d \n", arr[j]);
+                arr[j] = -1;
+            }
+        }
+    }
+}
+
 int main()
 {
     int A[] = {1,2,3,4,5,6,8,9,10,11,12};
     int B[] = {6,7,8,9,13,14,15,16,19,20};
     int C[] = {0,1,2,2,3,4,5,5,5,6,7,8,9};
+    int D[] = {3,2,4,1,5,4,2,3,8,9,1,0};
     int sum,s = 0;
 
     for(int i = 0 ; i < 11; i++)
@@ -138,5 +155,6 @@ int main()
     FindMissHash(B);
     FindDuplicate(C);
     FindDuplicateCount(C);
+    FindDuplicateUnsorted(D);
     return 0;
 }
