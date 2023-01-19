@@ -127,7 +127,6 @@ void FindDuplicateUnsorted(int *arr)
         change them to -1.
         3. next loop will check difference number, same as previous skip -1. 
     */
-
     int i,j;
     for(i = 0; i< 10 ; i++)
     {
@@ -173,9 +172,7 @@ void FindDupUnsortedHash(int * arr)
         {
             printf("Found duplicate of %d using HashMap\n", i);
         }
-        
     }
-
 }
 
 int main()
